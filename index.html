@@ -10,6 +10,92 @@
 </head>
 <main>
 
+    <div class="container">
+        <button class="btn" id="open-reg-form">New User</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Email</th>
+                    <th>Personal ID</th>
+                    <th>Mobile Number</th>
+                    <th>Zip</th>
+                    <th>Gender</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="user_id"></td>
+                    <td id="user_name"></td>
+                    <td id="user_surname"></td>
+                    <td id="user_email"></td>
+                    <td id="user_personal-id"></td>
+                    <td id="user_phone"></td>
+                    <td id="user_zip-code"></td>
+                    <td id="user_gender"></td>
+                    <td id="user_edit"><button>Edit</button></td>
+                    <td id="user_delete"><button>Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <section>
+        <div class="modal" id="reg-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3></h3>
+                    <button class="btn delete modal-close">X</button>
+                </div>
+                <div class="modal-body">
+                    <form class="form" id="reg" action="#" method="#" novalidate>
+                        <input id="user_id" type="hidden" placeholder="" value="" />
+                        <div class="input-field">
+                            <label for="user_name">Enter User Name</label>
+                            <input type="text" id="user_name" placeholder="user name" required />
+                        </div>
+                        <div class="input-field">
+                            <label for="user_surname">Enter User Surname</label>
+                            <input type="text" id="user_surname" placeholder="user surname" required />
+                        </div>
+
+                        <div class="input-field">
+                            <label for="user_phone">Enter phone number</label>
+                            <input type="number" id="user_phone" placeholder="phone number" required />
+                        </div>
+
+                        <div class="input-field">
+                            <label for="user_personal-id">Enter personal id</label>
+                            <input type="number" id="user_personal-id" placeholder="personal id" required />
+                        </div>
+
+                        <div class="input-field">
+                            <label for="user_email">Enter Email</label>
+                            <input type="email" id="user_email" placeholder="email" required />
+                        </div>
+
+                        <div class="input-field">
+                            <label for="user_zip-code">Enter zip code</label>
+                            <input type="text" id="user_zip-code" placeholder="zip code" required />
+                        </div>
+
+                        <div class="input-field">
+                            <label for="user_gender">Enter gender</label>
+                            <input type="text" id="user_gender" placeholder="gender" required />
+                        </div>
+
+                        <div class="input-field">
+                            <button class="btn" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
 <body>
