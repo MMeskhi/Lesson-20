@@ -22,8 +22,6 @@ openRegFormBtn.addEventListener("click", () => {
   dynamicOpenModal("#reg-modal");
 });
 
-const form = document.querySelector("#user-registraion-form");
-
 const onFormSubmitSuccess = (fields) => {
   if (fields.id) {
     updateUser(fields);
@@ -92,22 +90,34 @@ function renderUser() {
   const userTableBody = userTableContainer.querySelector("tbody");
 }
 
-const userItems = users.map((user) => {
-  return `<tr>
-            <td>${user_id}</td>
-            <td>${user_Name}</td>
-            <td>${userSurname}</td>
-            <td>${userEmail}</td>
-            <td>${userPersonalID}</td>
-            <td>${userPhone}</td>
-            <td>${userZip}</td>
-            <td>${userGender}</td>
-            <td><button data-user-id="${user_id}" class="user-edit" type="button">Edit</button></td>
-            <td><button data-user-id="${user_id}" class="user-remove" type="button">Delete</button></td>
-        </tr>`;
-});
-console.log(userItems);
-userTableBody.innerHTML = userItems.join("");
+async function renderUsers(usersArray) {
+  const tableBody = document.querySelector("tbody");
+  let tableBodyContent = "";
+  for (let index = 0; index < usersArray.length; index++) {
+    const user = usersArray[index];
+    tableBodyContent =
+      tableBodyContent +
+      `<tr>
+        <td>${user.id}</td>
+        <td>${user.email}</td>
+        <td>${user.first_name}</td>
+        <td>${user.last_name}</td>
+        <td>${user.gender}</td>
+        <td>${user.mobile}</td>
+        <td>${user.pn}</td>
+        <td>${user.zip}</td>
+        <td>${user.status}</td>
+        <td>
+            <button class="user-edit" data-user-id="${user.id}">Edit</button>
+            <button class="user-remove" data-user-id="${user.id}">Delete</button>
+        </td>
+      <tr>
+      `;
+  }
+
+  tableBody.innerHTML = tableBodyContent;
+  await userActions();
+}
 
 getUsers();
 const removeBtns = document.querySelectorAll(".user-remove");
