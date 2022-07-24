@@ -22,11 +22,18 @@ openRegFormBtn.addEventListener("click", () => {
   dynamicOpenModal("#reg-modal");
 });
 
-const createUserUrl = "http://borjomi.loremipsum.ge/api/register", //method POST
-  getAllUsersUrl = "http://borjomi.loremipsum.ge/api/all-users", //method GET
-  getSingleUserUrl = "http://borjomi.loremipsum.ge/api/get-user/1 ", //id method  GET
-  updateUserUrl = "http://borjomi.loremipsum.ge/api/update-user/1 ", //id method PUT
-  deleteUserUrl = "http://borjomi.loremipsum.ge/api/delete-user/1"; //id method DELETE
+const form = document.querySelector("#user-registraion-form");
+
+const onFormSubmitSuccess = (fields) => {
+  if (fields.id) {
+    updateUser(fields);
+  } else {
+    createUser(fields);
+  }
+};
+const onFormSubmitError = (fields) => {
+  console.log("Error", fields);
+};
 
 const regForm = document.querySelector("#reg"),
   user_Name = document.querySelector("#user_name"),
@@ -52,3 +59,127 @@ regForm.addEventListener("submit", (e) => {
   };
   regForm.reset();
 });
+
+function getUsers() {
+  fetch("http://borjomi.loremipsum.ge/api/get-user/${id}")
+    .then((resp) => {
+      return resp.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+getUsers();
+
+async function getUsers() {
+  try {
+    const response = await fetch(
+      "http://borjomi.loremipsum.ge/api/get-user/${id}"
+    );
+    const users = await response.json();
+    renderUser(users);
+  } catch (e) {
+    console.log("Error - ", e);
+  }
+}
+getUsers();
+
+function renderUser() {
+  const userTableContainer = document.querySelector("#user-list");
+  const userTableBody = userTableContainer.querySelector("tbody");
+}
+
+const userItems = users.map((user) => {
+  return `<tr>
+            <td>${user_id}</td>
+            <td>${user_Name}</td>
+            <td>${userSurname}</td>
+            <td>${userEmail}</td>
+            <td>${userPersonalID}</td>
+            <td>${userPhone}</td>
+            <td>${userZip}</td>
+            <td>${userGender}</td>
+            <td><button data-user-id="${user_id}" class="user-edit" type="button">Edit</button></td>
+            <td><button data-user-id="${user_id}" class="user-remove" type="button">Delete</button></td>
+        </tr>`;
+});
+console.log(userItems);
+userTableBody.innerHTML = userItems.join("");
+
+getUsers();
+const removeBtns = document.querySelectorAll(".user-remove");
+const editBtn = document.querySelectorAll(".user-edit");
+
+removeBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const tr = e.target.parentNode.parentNode;
+    tr.remove();
+    console.log(tr);
+  });
+});
+console.log(removeBtns);
+console.log(editBtn);
+
+removeBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const tr = e.target.parentNode.parentNode;
+    tr.remove();
+    console.log(tr);
+  });
+});
+
+function getUser(id) {
+  fetch(`http://borjomi.loremipsum.ge/api/get-user/${id}`, {
+    method: "get",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      getUsers();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function deleteUser(id) {
+  fetch(`http://borjomi.loremipsum.ge/api/delete-user/${id}`, {
+    method: "delete",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+async function updateUser(userObj) {
+  POST`http://borjomi.loremipsum.ge/api/update-user/${userObj.id}`;
+}
+async function deleteUser(userId) {
+  DELETE`http://borjomi.loremipsum.ge/api/update-user/${userObj.id}`;
+}
+
+const btn = document.querySelector("#get-users");
+btn.addEventListener("click", (e) => {
+  getUsers();
+});
+
+async function createUser(userData) {
+  try {
+    const response = await fetch("http://borjomi.loremipsum.ge/api/register", {
+      method: "post",
+      body: JSON.stringify(userData),
+      headers: { "Content-Type": "application/json" },
+    });
+    await response.json();
+    getUsers();
+  } catch (e) {
+    console.log("Error - ", e);
+  }
+}
